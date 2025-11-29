@@ -1,21 +1,19 @@
 import os
 import sys
-import runpy
 from pathlib import Path
+import runpy
 
 
 def main():
-    # Find the ScoreBot directory
     base_dir = Path(__file__).resolve().parent
     scorebot_dir = base_dir / "src" / "speedline" / "scorebot"
 
-    # Change working directory so imports like `from bot import ...` keep working
-    os.chdir(scorebot_dir)
+    if not scorebot_dir.exists():
+        raise SystemExit(f"ScoreBot folder nahi mila: {scorebot_dir}")
 
-    # Ensure scorebot_dir is on sys.path
+    os.chdir(scorebot_dir)
     sys.path.insert(0, str(scorebot_dir))
 
-    # Run app.py as if it was executed directly
     runpy.run_module("app", run_name="__main__")
 
 
